@@ -1,0 +1,57 @@
+g :: Integer -> Integer -> Bool
+g x y
+    | x + y == 2 = True
+    | otherwise = False
+    
+type Matrix = [[Integer]]
+
+tr :: Matrix -> Matrix
+tr ([]:_) = []
+tr m = (map head m):(tr (map tail m))
+
+msum :: Matrix -> Matrix -> Matrix
+msum = zipWith (\x y -> zipWith (+) x y)
+x :: Matrix
+y :: Matrix
+x = [[1,2],[3,4]]
+y = [[5,6],[7,8]]
+
+m1 = msum x y
+
+value ln col = foldr (+) 0 $ zipWith (+) ln col
+
+
+mprod :: Matrix -> Matrix -> Matrix
+mprod m1 m2 = map (\l -> map (value l) (tr m2)) m1
+
+m2 = mprod x y
+
+calc x = tail $ take (x+1) [0..]
+
+-- rez = foldl (:) [] [1,2,3,4,5]
+-- rez = foldl (\x acc -> acc ++ [x]) [] [1,2,3,4,5]
+-- lambda_fold x [] = [x]
+-- lambda_fold x (y:ys) = x:(y:ys)
+
+reverse' :: [a] -> [a]
+reverse' xs = foldl (\acc x -> x : acc) [] xs
+
+reverse'' xs = foldr (\ x acc -> x : acc) [] xs
+reverse2 xs = foldr (\ x acc -> acc ++ [x]) [] xs
+main :: IO ()
+main =  do
+
+print(g 10 25)
+print(zip [1,2,3] ["5","am","alex"])
+print(g 1 1)
+print(map (*2) $ take 5 $ tail [1,2,3,4,5,6,7,8,9,0])
+print(tr [[1,2,3],[4,5,6],[7,8,9]])
+print(minimum [1,2,3,7,-1,4,5,6])
+print(splitAt 3 [1,2,3,4,5,6,7,8,9,0])
+print(let (ys,zs) = splitAt 3 [1,2,3,4,5,6,7,8,9,0] in ys ++ (tail zs))
+print(zipWith (++) m1 m2)
+print(calc 10)
+print(reverse [1,2,3,4,5])
+print(foldl (\acc x -> x : acc) [] [1,2,3,4,5])
+print(reverse'' [1,2,3,4,5,6,7,8,9])
+print(reverse2 [1,2,3,4,5,6,7,8,9])
